@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "pdphillips.fun60-ultra",
+  "name": "FUN60 Ultra",
+  "version": "0.1.0",
+  "author": "pdphillips",
+  "license": "MIT",
+  "description": "Omarchy panel and bar widget for MonsGeek FUN60 Ultra (HE/TMR) HID settings. Unofficial; not affiliated with MonsGeek.",
+  "kinds": ["panel", "bar-widget"],
+  "entryPoints": {
+    "panel": "Panel.qml",
+    "barWidget": "BarWidget.qml"
+  },
+  "barWidget": {
+    "displayName": "FUN60 Ultra",
+    "description": "Connection state for a MonsGeek FUN60 Ultra; click opens the settings panel.",
+    "category": "Input",
+    "allowMultiple": false,
+    "defaultSection": "right"
+  }
+}

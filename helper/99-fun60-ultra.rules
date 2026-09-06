@@ -1,0 +1,9 @@
+# MonsGeek FUN60 Ultra / Akko vendor HID (VID 0x3151)
+# Install (user action, not run by the plugin):
+#   sudo cp helper/99-fun60-ultra.rules /etc/udev/rules.d/
+#   sudo udevadm control --reload-rules && sudo udevadm trigger
+# Then unplug/replug the keyboard or dongle.
+
+ACTION=="add|change", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="3151", MODE="0660", GROUP="input", TAG+="uaccess"
+ACTION=="add|change", SUBSYSTEM=="usb", ATTRS{idVendor}=="3151", MODE="0664", TAG+="uaccess"
+ACTION=="add|change", SUBSYSTEM=="hidraw", KERNELS=="0005:3151:*", MODE="0660", GROUP="input", TAG+="uaccess"
