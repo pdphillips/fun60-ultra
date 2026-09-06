@@ -1,1 +1,15 @@
 AGENTS.md
+__pycache__/
+*.pyc
+.env
+*.pem
+*.swp
+*~
+.DS_Store
+
+# user profile dumps live in ~/.config/omarchy/fun60-ultra/ — never commit copies
+devices.json
+
+# do not vendor monsgeek-akko-linux or its build output
+target/
+monsgeek-akko-linux/

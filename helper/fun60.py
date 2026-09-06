@@ -368,7 +368,7 @@ def cmd_profile_save(args: argparse.Namespace) -> None:
         "snapOn": None if args.snap is None else args.snap == "on",
     }
     write_profile(path, data)
-    emit({"ok": True, "name": args.name, "path": str(path), "profile": data})
+    emit({"ok": True, "name": args.name, "profile": data})
 
 
 def cmd_profile_load(args: argparse.Namespace) -> None:
