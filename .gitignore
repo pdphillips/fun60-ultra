@@ -10,6 +10,7 @@ __pycache__/
 # user profile dumps live in ~/.config/omarchy/fun60-ultra/ — never commit copies
 devices.json
 
-# do not vendor monsgeek-akko-linux or its build output
+# do not vendor monsgeek-akko-linux, cargo target/, or a dropped cache clone
 target/
 monsgeek-akko-linux/
+.cache/

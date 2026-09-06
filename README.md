@@ -8,9 +8,9 @@ MonsGeek and Akko are trademarks of their owners.
 
 ## Credit
 
-HID writes and the Linux protocol implementation come from **[echtzeit-solutions/monsgeek-akko-linux](https://github.com/echtzeit-solutions/monsgeek-akko-linux)** (RongYuan RY5088 userspace driver / `iot_driver`).
+HID writes and the Linux protocol implementation come from **[echtzeit-solutions/monsgeek-akko-linux](https://github.com/echtzeit-solutions/monsgeek-akko-linux)** (GPL-3.0; RongYuan RY5088 userspace driver / `iot_driver`).
 
-This plugin is a thin Omarchy QML shell around detection + that driver. It does not vendor that tree.
+This plugin execs the installed `iot_driver` binary. It is not a copy of that source and does not vendor that tree.
 
 ## What v1 does
 
@@ -73,27 +73,41 @@ sudo cp helper/99-fun60-ultra.rules /etc/udev/rules.d/
 sudo udevadm control --reload-rules && sudo udevadm trigger
 ```
 
-## Community driver (required to change actuation / Rapid Trigger / etc.)
+## Install the Linux driver
+
+Required to change actuation / Rapid Trigger / etc. If `iot_driver` is missing, the plugin reports `writeSupported: false` and does not invent packets. The script is **user-run**; the QML panel never invokes it with sudo.
+
+### Option A — script (preferred on Omarchy)
+
+```sh
+chmod +x helper/install-iot-driver.sh
+./helper/install-iot-driver.sh
+# then log out of the graphical session if the script added you to group input
+# unplug/replug 2.4G dongle
+which iot_driver
+iot_driver info
+```
+
+The script clones to `~/.cache/monsgeek-akko-linux` (not the plugin tree), runs `make driver` as the user, `sudo make install SKIP_REFRESH=1 PREFIX=/usr/local`, then deletes the clone. Missing `iot_driver` is fatal; `iot_driver info` with no keyboard is a warning.
+
+### Option B — manual (same end state)
 
 ```sh
 git clone https://github.com/echtzeit-solutions/monsgeek-akko-linux.git
 cd monsgeek-akko-linux
-# Arch / Omarchy:
 sudo pacman -S --needed base-devel pkgconf hidapi protobuf alsa-lib
-# rustup if needed
 make driver
 sudo make install SKIP_REFRESH=1
-# installs iot_driver to /usr/local/bin/iot_driver
-# source clone can be deleted after install
-which iot_driver
-iot_driver list
-iot_driver info
-iot_driver triggers
-iot_driver tui
-iot_driver serve   # then https://app.monsgeek.com in Chromium/Brave
+# clone may be deleted; binary stays at /usr/local/bin/iot_driver
 ```
 
-If `iot_driver` is missing, the plugin reports `writeSupported: false` and does not invent packets.
+After either option:
+
+```sh
+iot_driver tui
+# or
+iot_driver serve   # then https://app.monsgeek.com in Chromium/Brave
+```
 
 ## Verify
 
